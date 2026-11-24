@@ -57,6 +57,13 @@ header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;backgroun
 .btn-price:hover{background:var(--eaton-deep);transform:translateY(-1px)}
 .btn-price svg{width:18px;height:18px}
 .btn-price{white-space:nowrap}
+.btn-xmas{display:inline-flex;align-items:center;gap:8px;background:#B3122E;color:#fff;text-decoration:none;border-radius:999px;padding:11px 16px;font-weight:700;font-family:var(--font-display);letter-spacing:.02em;white-space:nowrap;box-shadow:0 6px 18px -8px #B3122E;transition:transform .15s,background .15s}
+.top nav a.btn-xmas{color:#fff;padding:11px 16px;font-size:1rem;border-radius:999px}
+.top nav a.btn-xmas:hover{background:#8E0E24;color:#fff;transform:translateY(-1px)}
+.btn-xmas svg{width:18px;height:18px;color:#FFD866}
+.short{display:none}
+@media (max-width:760px){.top nav a.btn-xmas{display:inline-flex;padding:10px 12px;font-size:.9rem}}
+@media (max-width:520px){.long{display:none}.short{display:inline}.top .wrap{gap:10px}.top nav{gap:6px}}
 @media (max-width:760px){.top nav a{display:none}.brand-sep,.brand-sub span{display:none}.wordmark{font-size:1.4rem}.btn-price{padding:10px 14px;font-size:.9rem}}
 @media (max-width:420px){.brand-sub{display:none}}
 
@@ -211,9 +218,13 @@ footer img{width:34px;height:34px;border-radius:4px}
       <a href="#dia">Menú del día</a>
       <a href="#semana">Semana</a>
       <a href="#grabgo">Grab &amp; Go</a>
+      <a class="btn-xmas" href="https://cocinarte2026.github.io/cocinarte-navidad2026/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 15.4 6.7 18.4l1.2-6L3.4 8.3l6-.7z"/></svg>
+        <span class="long">Navidad 2026</span><span class="short">Navidad</span>
+      </a>
       <button class="btn-price" data-open="all" type="button">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
-        Lista de precios
+        <span class="long">Lista de precios</span><span class="short">Precios</span>
       </button>
     </nav>
   </div>
