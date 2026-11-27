@@ -571,18 +571,20 @@ const heroIdx = isLive ? todayIdx : (iso < WEEK.days[0].date ? 0 : WEEK.days.len
 let sel = heroIdx;
 
 /* Hero */
-(function(){
-  const d = WEEK.days[heroIdx];
-  document.getElementById("heroWhen").textContent = isLive ? "Especial de hoy" : `Especial del ${d.name.toLowerCase()} ${dlabel(d.date)}`;
+function renderHero(idx){
+  const d = WEEK.days[idx];
+  document.getElementById("heroWhen").textContent = (isLive && idx===todayIdx) ? "Especial de hoy" : `Especial del ${d.name.toLowerCase()} ${dlabel(d.date)}`;
   document.getElementById("heroDish").textContent = dn(d.esp);
   document.getElementById("heroDesc").textContent = dd(d.esp);
-  if(PHOTOS[d.photo]!=null){ const im=document.getElementById("heroImg"); im.src=PHOTOS[d.photo]; im.alt=dn(d.esp); }
+  if(!window.__heroDefault) window.__heroDefault=document.getElementById("heroImg").src;
+  { const im=document.getElementById("heroImg"); im.src = PHOTOS[d.photo]!=null ? PHOTOS[d.photo] : window.__heroDefault; im.alt=dn(d.esp); }
   const p = priceOf("Combos Especiales"); document.getElementById("heroPrice").textContent = p ? fmt(p) : "";
   document.getElementById("heroDate").textContent = `${d.name} ${dlabel(d.date)}`;
   document.getElementById("heroAlso").innerHTML = ROWS.filter(r=>r.key!=="esp").map(r=>`<div><span class="k">${r.label}</span><span>${dn(d[r.key])}</span></div>`).join("");
   document.getElementById("heroCap").textContent = WEEK.title;
   document.getElementById("weekTitle").textContent = WEEK.title;
-})();
+}
+renderHero(heroIdx);
 
 /* Day tabs */
 const tabsEl = document.getElementById("tabs"), listEl = document.getElementById("dayList");
@@ -600,8 +602,8 @@ function renderDay(){
   const li = arr => (arr||[]).map(x=>`<li>${x}</li>`).join("");
   document.getElementById("dayExtras").innerHTML = (d.guar||d.fres) ? `<div><h4>${svg("bowl")}Guarniciones</h4><ul>${li(d.guar)}</ul></div><div><h4>${svg("cup")}Frescos del día</h4><ul>${li(d.fres)}</ul></div><p class="note">Todos los platos fuertes se acompañan con arroz blanco y frijoles.</p>` : "";
 }
-tabsEl.addEventListener("click",e=>{const b=e.target.closest(".tab"); if(!b) return; sel=+b.dataset.i; renderTabs(); renderDay();});
-tabsEl.addEventListener("keydown",e=>{ if(!["ArrowLeft","ArrowRight"].includes(e.key)) return; sel=(sel+(e.key==="ArrowRight"?1:-1)+5)%5; renderTabs(); renderDay(); document.getElementById("tab"+sel).focus(); });
+tabsEl.addEventListener("click",e=>{const b=e.target.closest(".tab"); if(!b) return; sel=+b.dataset.i; renderTabs(); renderDay(); renderHero(sel);});
+tabsEl.addEventListener("keydown",e=>{ if(!["ArrowLeft","ArrowRight"].includes(e.key)) return; sel=(sel+(e.key==="ArrowRight"?1:-1)+5)%5; renderTabs(); renderDay(); renderHero(sel); document.getElementById("tab"+sel).focus(); });
 renderTabs(); renderDay();
 
 /* Week table */
